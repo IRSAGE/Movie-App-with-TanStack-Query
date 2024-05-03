@@ -1,12 +1,20 @@
 import { fetchMovie } from "@/api/movies";
 import { Stack, useLocalSearchParams } from "expo-router";
-import { View, Text, ActivityIndicator, Image, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  ActivityIndicator,
+  Image,
+  Pressable,
+  Alert,
+} from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { addMovieToWatchList } from "@/api/watchList";
 
 const MovieDetails = () => {
   const { id } = useLocalSearchParams();
+  const client = useQueryClient();
 
   const {
     data: movie,
@@ -19,6 +27,10 @@ const MovieDetails = () => {
 
   const { mutate } = useMutation({
     mutationFn: () => addMovieToWatchList(Number(id)),
+    onSuccess: () => {
+      Alert.alert("Movie Added To Wactch List.");
+      client.invalidateQueries(["watchlist"]);
+    },
   });
 
   if (isLoading) {
