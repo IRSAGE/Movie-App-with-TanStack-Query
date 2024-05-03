@@ -1,13 +1,24 @@
 import { fetchMovie } from "@/api/movies";
-import { useLocalSearchParams } from "expo-router";
-import { View, Text, ActivityIndicator } from "react-native";
-import { useQuery } from "@tanstack/react-query";
+import { Stack, useLocalSearchParams } from "expo-router";
+import { View, Text, ActivityIndicator, Image, Pressable } from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { addMovieToWatchList } from "@/api/watchList";
 
 const MovieDetails = () => {
   const { id } = useLocalSearchParams();
-  const { data, isLoading, error } = useQuery({
+
+  const {
+    data: movie,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ["movies", id],
-    queryFn: () => fetchMovie(id),
+    queryFn: () => fetchMovie(Number(id)),
+  });
+
+  const { mutate } = useMutation({
+    mutationFn: () => addMovieToWatchList(Number(id)),
   });
 
   if (isLoading) {
@@ -20,7 +31,28 @@ const MovieDetails = () => {
 
   return (
     <View>
-      <Text style={{ fontSize: 24, fontWeight: "500" }}>{data.title}</Text>
+      <Stack.Screen options={{ title: movie.title }} />
+      <Image
+        source={{
+          uri: "https://image.tmdb.org/t/p/w500" + movie.backdrop_path,
+        }}
+        style={{ width: "100%", height: 300 }}
+      />
+      <View style={{ padding: 10 }}>
+        <Text style={{ fontSize: 30, fontWeight: "500", marginVertical: 10 }}>
+          {movie.title}
+        </Text>
+        <View style={{ marginVertical: 10 }}>
+          <Pressable
+            onPress={() => mutate()}
+            style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
+          >
+            <FontAwesome name="bookmark-o" size={24} color="black" />
+            <Text>Add to watchlist</Text>
+          </Pressable>
+        </View>
+        <Text style={{ fontSize: 16 }}>{movie.overview}</Text>
+      </View>
     </View>
   );
 };

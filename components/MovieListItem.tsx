@@ -11,7 +11,6 @@ const MovieListItem = ({ movie }) => {
           }}
           style={{ width: "100%", aspectRatio: 3 / 5, borderRadius: 20 }}
         />
-        {/* <Text>{movie.title}</Text> */}
       </Pressable>
     </Link>
   );
