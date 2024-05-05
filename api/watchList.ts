@@ -1,12 +1,11 @@
 export const addMovieToWatchList = async (movieId: number) => {
-  const url = "https://api.themoviedb.org/3/account/21050033/watchlist";
+  const url = `${process.env.API_URL}account/21050033/watchlist`;
   const options = {
     method: "POST",
     headers: {
       accept: "application/json",
       "content-type": "application/json",
-      Authorization:
-        "Bearer   eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3MTg3ZmM4MTc5YzkwYmU4ZjUwMjUzNGNmMjEzMjk4NyIsInN1YiI6IjYyYzJkYTZhNmEzMDBiMDA1OTllNWYxMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.UeQMfkFglpe0rGDn2CAyk3ZtGrEF593zs6oXxj7eNEg",
+      Authorization: "Bearer " + process.env.API_KEY,
     },
     body: JSON.stringify({
       media_type: "movie",
@@ -26,13 +25,12 @@ export const addMovieToWatchList = async (movieId: number) => {
 };
 
 export const fetchWatchlistMovies = async ({ pageParam }) => {
-  const url = `https://api.themoviedb.org/3/account/21050033/watchlist/movies?language=en-US&page=${pageParam}&sort_by=created_at.desc`;
+  const url = `${process.env.API_URL}account/21050033/watchlist/movies?language=en-US&page=${pageParam}&sort_by=created_at.desc`;
   const options = {
     method: "GET",
     headers: {
       accept: "application/json",
-      Authorization:
-        "Bearer   eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3MTg3ZmM4MTc5YzkwYmU4ZjUwMjUzNGNmMjEzMjk4NyIsInN1YiI6IjYyYzJkYTZhNmEzMDBiMDA1OTllNWYxMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.UeQMfkFglpe0rGDn2CAyk3ZtGrEF593zs6oXxj7eNEg",
+      Authorization: "Bearer " + process.env.API_KEY,
     },
   };
 

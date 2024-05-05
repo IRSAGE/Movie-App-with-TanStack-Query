@@ -10,7 +10,7 @@ export default function TabOneScreen() {
       queryKey: ["movies"],
       queryFn: fetchTopRatedMovies,
       initialPageParam: 1,
-      getNextPageParam: (pages) => pages.length + 1,
+      getNextPageParam: (lastPage, pages) => pages.length + 1,
     });
   const movies = data?.pages?.flat();
 

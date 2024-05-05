@@ -1,9 +1,6 @@
-const apiKey =
-  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3MTg3ZmM4MTc5YzkwYmU4ZjUwMjUzNGNmMjEzMjk4NyIsInN1YiI6IjYyYzJkYTZhNmEzMDBiMDA1OTllNWYxMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.UeQMfkFglpe0rGDn2CAyk3ZtGrEF593zs6oXxj7eNEg";
-
 const headers = {
   accept: "application/json",
-  Authorization: "Bearer " + apiKey,
+  Authorization: "Bearer " + process.env.API_KEY,
 };
 export const fetchTopRatedMovies = async ({ pageParam }) => {
   const options = {
@@ -11,8 +8,7 @@ export const fetchTopRatedMovies = async ({ pageParam }) => {
     headers,
   };
 
-  const url = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${pageParam}`;
-
+  const url = `${process.env.API_URL}movie/top_rated?language=en-US&page=${pageParam}`;
   const res = await fetch(url, options);
 
   if (!res.ok) {
@@ -24,7 +20,7 @@ export const fetchTopRatedMovies = async ({ pageParam }) => {
 };
 
 export const fetchMovie = async (id: number) => {
-  const url = `https://api.themoviedb.org/3/movie/${id}?language=en-US`;
+  const url = `${process.env.API_URL}movie/${id}?language=en-US`;
   const options = {
     method: "GET",
     headers,
