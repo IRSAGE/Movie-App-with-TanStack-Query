@@ -25,9 +25,8 @@ export const addMovieToWatchList = async (movieId: number) => {
   return json;
 };
 
-export const fetchWatchlistMovies = async () => {
-  const url =
-    "https://api.themoviedb.org/3/account/21050033/watchlist/movies?language=en-US&page=1&sort_by=created_at.desc";
+export const fetchWatchlistMovies = async ({ pageParam }) => {
+  const url = `https://api.themoviedb.org/3/account/21050033/watchlist/movies?language=en-US&page=${pageParam}&sort_by=created_at.desc`;
   const options = {
     method: "GET",
     headers: {
